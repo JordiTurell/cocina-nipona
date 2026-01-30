@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import sequelize from "./config/database";
+import authRoutes from './routes/auth.routes';
 
 // Configuración
 dotenv.config();
@@ -32,6 +33,9 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/api/health', (req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// Rutas de API
+app.use('/api/auth', authRoutes);
 
 // Iniciar servidor
 sequelize.sync({ alter: true }).then(() => {
