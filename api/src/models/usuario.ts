@@ -26,7 +26,7 @@ export class Usuario extends Model {
 
     @Column({
         type: DataType.STRING,
-        allowNull: false,
+        allowNull: true,
     })
     imageProfile?: string;
 }

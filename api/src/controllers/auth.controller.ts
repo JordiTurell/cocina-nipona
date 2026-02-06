@@ -15,7 +15,7 @@ export class AuthController {
             if (!password || !nickname || !rolId) {
                 res.status(400).json({ 
                     error: 'Datos incompletos',
-                    message: 'Se requieren password, nickname y rolId' 
+                    message: 'Se requieren password, nickname y rolId'
                 });
                 return;
             }

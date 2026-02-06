@@ -2,7 +2,11 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import sequelize from "./config/database";
+
+//#region Rutas
 import authRoutes from './routes/auth.routes';
+import rolesRoutes from './routes/roles.routes';
+//#endregion
 
 // Configuración
 dotenv.config();
@@ -10,7 +14,6 @@ dotenv.config();
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares
 app.use(cors({
     origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -18,25 +21,11 @@ app.use(cors({
 }));
 
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
 
-// Rutas
-app.get('/', (req: Request, res: Response) => {
-  res.json({ 
-    message: 'API Cocina Nipona',
-    version: '1.0.0',
-    status: 'running'
-  });
-});
 
-app.get('/api/health', (req: Request, res: Response) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// Rutas de API
 app.use('/api/auth', authRoutes);
-
+app.use('/api/roles', rolesRoutes)
 // Iniciar servidor
 sequelize.sync({ alter: true }).then(() => {
     console.log('🗄️  Base de datos sincronizada (tablas recreadas)');
